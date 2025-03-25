@@ -1,3 +1,51 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for ansible_galaxy_role_hadoop
+
+- name: "Hadoop | Download jdk tarball file"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.get_url:
+    url: https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz
+    dest: /usr/local/src
+
+- name: "Hadoop | Unpack jdk tarball file"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: /usr/local/src/openjdk-11.0.2_linux-x64_bin.tar.gz
+    dest: /opt
+
+- name: "Hadoop | Download binary"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.get_url:
+    url: https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz
+    dest: /usr/local/src
+
+- name: "Hadoop | Download signature file"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.get_url:
+    url: https://downloads.apache.org/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz.asc
+    dest: /usr/local/src
+
+- name: "Hadoop | Download key file"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.get_url:
+    url: https://downloads.apache.org/hadoop/common/KEYS
+    dest: /tmp/hadoop-keys
+
+- name: "Hadoop | Import and trust GPG public key"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.shell:
+    cmd: |
+      gpg --import "/tmp/hadoop-keys"
+      echo "$( \
+        gpg --list-keys \
+        | grep "{{ file_name }}" | tail -1 \
+        | tr -d '[:space:]' \
+      ):6:" | gpg --import-ownertrust
