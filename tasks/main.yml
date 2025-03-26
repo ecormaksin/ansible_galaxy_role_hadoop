@@ -21,14 +21,14 @@
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
   ansible.builtin.get_url:
-    url: https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz
+    url: https://dlcdn.apache.org/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz
     dest: /usr/local/src
 
 - name: "Hadoop | Download signature file"
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
   ansible.builtin.get_url:
-    url: https://downloads.apache.org/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz.asc
+    url: https://dlcdn.apache.org/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz.asc
     dest: /usr/local/src
 
 - name: "Hadoop | Download key file"
@@ -38,14 +38,25 @@
     url: https://downloads.apache.org/hadoop/common/KEYS
     dest: /tmp/hadoop-keys
 
-- name: "Hadoop | Import and trust GPG public key"
+- name: "Hadoop | Import GPG public key and verify binary"
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
   ansible.builtin.shell:
     cmd: |
-      gpg --import "/tmp/hadoop-keys"
-      echo "$( \
-        gpg --list-keys \
-        | grep "{{ file_name }}" | tail -1 \
-        | tr -d '[:space:]' \
-      ):6:" | gpg --import-ownertrust
+      gpg --import /tmp/hadoop-keys
+      gpg --verify /usr/local/src/hadoop-3.4.1.tar.gz.asc /usr/local/src/hadoop-3.4.1.tar.gz
+  register: hadoop_gpg_verify
+
+- name: "Hadoop | Succeeded to verify"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.debug:
+    msg: "GPG検証が成功しました。"
+  when: hadoop_gpg_verify.rc == 0
+
+- name: "Hadoop | Failed to verify"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.debug:
+    msg: "GPG検証が失敗しました。"
+  when: hadoop_gpg_verify.rc != 0
