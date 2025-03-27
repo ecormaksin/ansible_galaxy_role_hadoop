@@ -38,6 +38,15 @@
     url: https://downloads.apache.org/hadoop/common/KEYS
     dest: /tmp/hadoop-keys
 
+- name: "Hadoop | Install GPG"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  apt:
+    pkg:
+      - gpg
+    state: present
+    update_cache: yes
+
 - name: "Hadoop | Import GPG public key and verify binary"
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
@@ -60,3 +69,11 @@
   ansible.builtin.debug:
     msg: "GPG検証が失敗しました。"
   when: hadoop_gpg_verify.rc != 0
+
+- name: "Hadoop | Unpack binary"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: /usr/local/src/hadoop-3.4.1.tar.gz
+    dest: /opt
