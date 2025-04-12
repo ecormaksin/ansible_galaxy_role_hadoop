@@ -50,5 +50,17 @@
     <name>mapreduce.reduce.shuffle.parallelcopies</name>
     <value>{{ hadoop.mapred_site.mapreduce.reduce.shuffle.parallelcopies }}</value>
   </property>
+  <property>
+    <name>mapreduce.jobhistory.address</name>
+    <value>{{ hadoop.mapred_site.mapreduce.jobhistory.address.host }}:{{ hadoop.yarn_site.mapreduce.jobhistory.address.port }}</value>
+  </property>
+  <property>
+    <name>mapreduce.jobhistory.webapp.address</name>
+    <value>{{ hadoop.mapred_site.mapreduce.jobhistory.webapp.address.host }}:{{ hadoop.yarn_site.mapreduce.jobhistory.webapp.address.port }}</value>
+  </property>
+  <property>
+    <name>mapreduce.jobhistory.intermediate-done-dir</name>
+    <value>{{ hadoop.mapred_site.mapreduce.jobhistory.intermediate-done-dir }}</value>
+  </property>
 
 </configuration>
