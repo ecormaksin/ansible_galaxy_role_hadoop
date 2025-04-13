@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check disk usage
 DISK_USAGE=$(df / | tail -1 | awk '{print $5}' | sed 's/%//')
