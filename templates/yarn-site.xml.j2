@@ -26,7 +26,7 @@
   </property>
   <property>
     <name>yarn.log-aggregation-enable</name>
-    <value>{{ hadoop.yarn_site.yarn.log-aggregation-enable }}</value>
+    <value>{{ hadoop.yarn_site.yarn.log_aggregation_enable }}</value>
   </property>
   <property>
     <name>yarn.resourcemanager.address</name>
@@ -38,7 +38,7 @@
   </property>
   <property>
     <name>yarn.resourcemanager.resource-tracker.address</name>
-    <value>{{ hadoop.yarn_site.yarn.resourcemanager.resource-tracker.address.host }}:{{ hadoop.yarn_site.yarn.resourcemanager.resource-tracker.address.port }}</value>
+    <value>{{ hadoop.yarn_site.yarn.resourcemanager.resource_tracker.address.host }}:{{ hadoop.yarn_site.yarn.resourcemanager.resource_tracker.address.port }}</value>
   </property>
   <property>
     <name>yarn.resourcemanager.admin.address</name>
@@ -62,67 +62,83 @@
   </property>
   <property>
     <name>yarn.scheduler.minimum-allocation-mb</name>
-    <value>{{ hadoop.yarn_site.yarn.scheduler.minimum-allocation-mb }}</value>
+    <value>{{ hadoop.yarn_site.yarn.scheduler.minimum_allocation_mb }}</value>
   </property>
   <property>
     <name>yarn.scheduler.maximum-allocation-mb</name>
-    <value>{{ hadoop.yarn_site.yarn.scheduler.maximum-allocation-mb }}</value>
+    <value>{{ hadoop.yarn_site.yarn.scheduler.maximum_allocation_mb }}</value>
   </property>
   <property>
     <name>yarn.resourcemanager.nodes.include-path</name>
-    <value>{{ hadoop.yarn_site.yarn.resourcemanager.nodes.include-path }}</value>
+    <value>{{ hadoop.yarn_site.yarn.resourcemanager.nodes.include_path }}</value>
   </property>
   <property>
     <name>yarn.resourcemanager.nodes.exclude-path</name>
-    <value>{{ hadoop.yarn_site.yarn.resourcemanager.nodes.exclude-path }}</value>
+    <value>{{ hadoop.yarn_site.yarn.resourcemanager.nodes.exclude_path }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.resource.memory-mb</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.resource.memory-mb }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.resource.memory_mb }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.resource.detect-hardware-capabilities</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.resource.detect-hardware-capabilities }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.resource.detect_hardware_capabilities }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.vmem-pmem-ratio</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.vmem-pmem-ratio }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.vmem_pmem_ratio }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.local-dirs</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.local-dirs }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.local_dirs }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.log-dirs</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.log-dirs }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.log_dirs }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.log.retain-seconds</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.log.retain-seconds }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.log.retain_seconds }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.remote-app-log-dir</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.remote-app-log-dir }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.remote_app_log_dir }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.remote-app-log-dir-suffix</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.remote-app-log-dir-suffix }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.remote_app_log_dir_suffix }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.aux-services</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.aux-services }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.aux_services }}</value>
   </property>
   <property>
     <name>yarn.nodemanager.env-whitelist</name>
-    <value>{{ hadoop.yarn_site.yarn.nodemanager.env-whitelist }}</value>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.env_whitelist }}</value>
   </property>
   <property>
     <name>yarn.log-aggregation.retain-seconds</name>
-    <value>{{ hadoop.yarn_site.yarn.log-aggregation.retain-seconds }}</value>
+    <value>{{ hadoop.yarn_site.yarn.log_aggregation.retain_seconds }}</value>
   </property>
   <property>
     <name>yarn.log-aggregation.retain-check-interval-seconds</name>
-    <value>{{ hadoop.yarn_site.yarn.log-aggregation.retain-check-interval-seconds }}</value>
+    <value>{{ hadoop.yarn_site.yarn.log_aggregation.retain_check_interval_seconds }}</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.health-checker.scripts</name>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.health_checker.scripts }}</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.health-checker.timeout-ms</name>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.health_checker.timeout_ms }}</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.health-checker.run-before-startup</name>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.health_checker.run_before_startup }}</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.health-checker.interval-ms</name>
+    <value>{{ hadoop.yarn_site.yarn.nodemanager.health_checker.interval_ms }}</value>
   </property>
 
 </configuration>
