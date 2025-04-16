@@ -2,6 +2,13 @@
 ---
 # tasks file for ansible_galaxy_role_hadoop
 
+- name: "Hadoop | Create a group"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.group:
+    name: hadoop
+    state: present
+
 - name: "Hadoop | Download jdk tarball file"
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
