@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export HADOOP_HOME=/opt/hadoop-3.4.1
+export PDSH_RCMD_TYPE=ssh
 
 echo $PATH | grep "${HADOOP_HOME}/bin" >/dev/null
 if [ $? -ne 0 ]; then

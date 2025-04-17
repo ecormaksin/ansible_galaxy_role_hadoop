@@ -9,6 +9,20 @@
     name: hadoop
     state: present
 
+- name: "Hadoop | Create users"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.user:
+    name: "{{ item }}"
+    create_home: false
+    shell: /usr/bin/bash
+    state: present
+  with_items:
+    - hadoop
+    - hdfs
+    - yarn
+    - mapred
+
 - name: "Hadoop | Download jdk tarball file"
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
@@ -84,3 +98,60 @@
     remote_src: yes
     src: /usr/local/src/hadoop-3.4.1.tar.gz
     dest: /opt
+    mode: "775"
+    owner: hadoop
+    group: hadoop
+
+- name: "Hadoop | Copy files"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+  with_items:
+    - {
+        src: "etc/profile.d/00-java.sh",
+        dest: "/etc/profile.d/00-java.sh",
+        mode: "644",
+        owner: "root",
+        group: "root",
+      }
+    - {
+        src: "etc/profile.d/01-hadoop.sh",
+        dest: "/etc/profile.d/01-hadoop.sh",
+        mode: "644",
+        owner: "root",
+        group: "root",
+      }
+    - {
+        src: "hadoop-env.sh",
+        dest: "/opt/hadoop-3.4.1/etc/hadoop/hadoop-env.sh",
+        mode: "775",
+        owner: "hadoop",
+        group: "hadoop",
+      }
+    - {
+        src: "hadoop-node-health-check.sh",
+        dest: "/opt/hadoop-3.4.1/bin/hadoop-node-health-check.sh",
+        mode: "775",
+        owner: "hadoop",
+        group: "hadoop",
+      }
+
+- name: "Hadoop | Replace configuration files"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.template:
+    src: "{{ item }}-site.xml.j2"
+    dest: "/opt/hadoop-3.4.1/etc/hadoop/{{ item }}-site.xml"
+    owner: hadoop
+    group: hadoop
+    mode: "644"
+  with_items:
+    - core
+    - hdfs
+    - mapred
+    - yarn
