@@ -15,7 +15,7 @@
   ansible.builtin.user:
     name: "{{ item }}"
     create_home: false
-    shell: /usr/bin/bash
+    shell: /sbin/nologin
     state: present
   with_items:
     - hadoop
