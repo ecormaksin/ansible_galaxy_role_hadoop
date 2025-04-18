@@ -155,3 +155,13 @@
     - hdfs
     - mapred
     - yarn
+
+- name: "Hadoop | Add worker hostnames or IP addresses in etc/hadoop/workers file"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.lineinfile:
+    path: /opt/hadoop-3.4.1/etc/hadoop/workers
+    regexp: '^{{ item | regex_replace("\.", "\.") }}$'
+    insertafter: "^localhost$"
+    line: "{{ item }}"
+  loop: "{{ hadoop.workers | flatten(1) }}"
