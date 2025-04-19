@@ -14,6 +14,8 @@
   ignore_errors: "{{ ansible_check_mode }}"
   ansible.builtin.user:
     name: "{{ item }}"
+    groups: hadoop
+    append: true
     create_home: false
     shell: /sbin/nologin
     state: present
@@ -22,6 +24,21 @@
     - hdfs
     - yarn
     - mapred
+  tags:
+    - oneshot
+
+- name: "Hadoop | Add users to hadoop group"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: hadoop
+    append: true
+  with_items:
+    - root
+    - "{{ ansible_user }}"
+  tags:
+    - oneshot
 
 - name: "Hadoop | Download jdk tarball file"
   become: true
