@@ -13,17 +13,17 @@
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
   ansible.builtin.user:
-    name: "{{ item }}"
+    name: "{{ item.name }}"
     groups: hadoop
     append: true
-    create_home: false
+    create_home: "{{ item.create_home }}"
     shell: /sbin/nologin
     state: present
   with_items:
-    - hadoop
-    - hdfs
-    - yarn
-    - mapred
+    - { name: "hadoop", create_home: false }
+    - { name: "hdfs", create_home: false }
+    - { name: "yarn", create_home: true }
+    - { name: "mapred", create_home: false }
   tags:
     - oneshot
 
@@ -37,6 +37,31 @@
   with_items:
     - root
     - "{{ ansible_user }}"
+
+- name: "Hadoop | Create a directory for yarn user ssh"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.file:
+    path: /home/yarn/.ssh
+    state: directory
+    owner: yarn
+    group: yarn
+    mode: "700"
+  tags:
+    - oneshot
+
+- name: "Hadoop | Copy files for yarn user ssh"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.copy:
+    src: "ssh-key/{{ item.src }}"
+    dest: "/home/yarn/.ssh/{{ item.dest }}"
+    mode: "600"
+    owner: yarn
+    group: yarn
+  with_items:
+    - { src: "id_ed25519", dest: "id_ed25519" }
+    - { src: "id_ed25519.pub", dest: "authorized_keys" }
   tags:
     - oneshot
 
