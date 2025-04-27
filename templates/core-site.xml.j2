@@ -17,16 +17,20 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-    <property>
-      <name>hadoop.tmp.dir</name>
-      <value>{{ hadoop.tmp.dir }}</value>
-    </property>
-    <property>
-        <name>fs.defaultFS</name>
-        <value>hdfs://{{ hadoop.namenode.host }}:{{ hadoop.namenode.port }}</value>
-    </property>
-    <property>
-        <name>io.file.buffer.size</name>
-        <value>{{ hadoop.core_site.io_file_buffer_size }}</value>
-    </property>
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>{{ hadoop.tmp.dir }}</value>
+  </property>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://{{ hadoop.namenode.host }}:{{ hadoop.namenode.port }}</value>
+  </property>
+  <property>
+    <name>io.file.buffer.size</name>
+    <value>{{ hadoop.core_site.io_file_buffer_size }}</value>
+  </property>
+  <property>
+    <name>fs.permissions.umask-mode</name>
+    <value>{{ hadoop.core_site.fs.permissions.umask_mode }}</value>
+  </property>
 </configuration>

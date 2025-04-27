@@ -39,6 +39,22 @@
     </property>
     <property>
         <name>dfs.datanode.data.dir</name>
-        <value>{{ hadoop.hdfs_site.dfs.datanode.data.dir }}</value>
+        <value>{{ hadoop.hdfs_site.dfs.datanode.data.dir.path }}</value>
+    </property>
+    <property>
+        <name>dfs.permissions.superusergroup</name>
+        <value>{{ hadoop.hdfs_site.dfs.permissions.superusergroup }}</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir.perm</name>
+        <value>{{ hadoop.hdfs_site.dfs.datanode.data.dir.perm }}</value>
+    </property>
+    <property>
+        <name>dfs.namenode.storage.dir.perm</name>
+        <value>{{ hadoop.hdfs_site.dfs.namenode.storage.dir.perm }}</value>
+    </property>
+    <property>
+        <name>dfs.journalnode.edits.dir.perm</name>
+        <value>{{ hadoop.hdfs_site.dfs.journalnode.edits.dir.perm }}</value>
     </property>
 </configuration>

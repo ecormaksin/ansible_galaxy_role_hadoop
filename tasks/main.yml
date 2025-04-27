@@ -13,19 +13,17 @@
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
   ansible.builtin.user:
-    name: "{{ item.name }}"
-    groups: hadoop
-    append: true
-    create_home: "{{ item.create_home }}"
-    shell: /sbin/nologin
+    name: "{{ item }}"
+    password: ""
+    group: hadoop
+    create_home: true
+    shell: /usr/bin/bash
     state: present
   with_items:
-    - { name: "hadoop", create_home: false }
-    - { name: "hdfs", create_home: false }
-    - { name: "yarn", create_home: true }
-    - { name: "mapred", create_home: false }
-  tags:
-    - oneshot
+    - hadoop
+    - hdfs
+    - yarn
+    - mapred
 
 - name: "Hadoop | Add users to hadoop group"
   become: true
@@ -38,32 +36,56 @@
     - root
     - "{{ ansible_user }}"
 
-- name: "Hadoop | Create a directory for yarn user ssh"
+- name: "Hadoop | Create a directory for ssh trusted access"
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
   ansible.builtin.file:
-    path: /home/yarn/.ssh
+    path: "/home/{{ item }}/.ssh"
     state: directory
-    owner: yarn
-    group: yarn
+    owner: "{{ item }}"
+    group: "{{ item }}"
     mode: "700"
-  tags:
-    - oneshot
+  with_items:
+    - hdfs
+    - yarn
+    - mapred
 
-- name: "Hadoop | Copy files for yarn user ssh"
+- name: "Hadoop | Copy files for ssh trusted access"
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
   ansible.builtin.copy:
     src: "ssh-key/{{ item.src }}"
-    dest: "/home/yarn/.ssh/{{ item.dest }}"
+    dest: "/home/{{ item.owner }}/.ssh/{{ item.dest }}"
     mode: "600"
-    owner: yarn
-    group: yarn
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
   with_items:
-    - { src: "id_ed25519", dest: "id_ed25519" }
-    - { src: "id_ed25519.pub", dest: "authorized_keys" }
-  tags:
-    - oneshot
+    - { src: "id_ed25519", dest: "id_ed25519", owner: "hdfs", group: "hdfs" }
+    - {
+        src: "id_ed25519.pub",
+        dest: "authorized_keys",
+        owner: "hdfs",
+        group: "hdfs",
+      }
+    - { src: "id_ed25519", dest: "id_ed25519", owner: "yarn", group: "yarn" }
+    - {
+        src: "id_ed25519.pub",
+        dest: "authorized_keys",
+        owner: "yarn",
+        group: "yarn",
+      }
+    - {
+        src: "id_ed25519",
+        dest: "id_ed25519",
+        owner: "mapred",
+        group: "mapred",
+      }
+    - {
+        src: "id_ed25519.pub",
+        dest: "authorized_keys",
+        owner: "mapred",
+        group: "mapred",
+      }
 
 - name: "Hadoop | Download jdk tarball file"
   become: true
@@ -197,6 +219,8 @@
     - hdfs
     - mapred
     - yarn
+  tags:
+    - oneshot
 
 - name: "Hadoop | Add worker hostnames or IP addresses in etc/hadoop/workers file"
   become: true
@@ -207,3 +231,13 @@
     insertafter: "^localhost$"
     line: "{{ item }}"
   loop: "{{ hadoop.workers | flatten(1) }}"
+
+- name: "Hadoop | Create a directory for log files"
+  become: true
+  ignore_errors: "{{ ansible_check_mode }}"
+  ansible.builtin.file:
+    path: /opt/hadoop-3.4.1/logs
+    state: directory
+    owner: hadoop
+    group: hadoop
+    mode: "775"
