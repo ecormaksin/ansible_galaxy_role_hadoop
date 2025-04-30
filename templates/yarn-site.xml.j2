@@ -140,5 +140,13 @@
     <name>yarn.nodemanager.health-checker.interval-ms</name>
     <value>{{ hadoop.yarn_site.yarn.nodemanager.health_checker.interval_ms }}</value>
   </property>
+  <property>
+    <name>yarn.web-proxy.address</name>
+    <value>{{ hadoop.yarn_site.yarn.web_proxy.address.host }}:{{ hadoop.yarn_site.yarn.web_proxy.address.port }}</value>
+  </property>
+  <property>
+    <name>yarn.web-proxy.bind-host</name>
+    <value>{{ hadoop.yarn_site.yarn.web_proxy.bind_host }}</value>
+  </property>
 
 </configuration>
