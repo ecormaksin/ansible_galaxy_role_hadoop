@@ -243,12 +243,15 @@
     line: "{{ item }}"
   loop: "{{ hadoop.workers | flatten(1) }}"
 
-- name: "Hadoop | Create a directory for log files"
+- name: "Hadoop | Create directories for Hadoop Cluster"
   become: true
   ignore_errors: "{{ ansible_check_mode }}"
   ansible.builtin.file:
-    path: /opt/hadoop-3.4.1/logs
+    path: "{{ item }}"
     state: directory
     owner: hadoop
     group: hadoop
     mode: "775"
+  with_items:
+    - /opt/hadoop-3.4.1/logs
+    - "{{ hadoop.tmp.dir }}"

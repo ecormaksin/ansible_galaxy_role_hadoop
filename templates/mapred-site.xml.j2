@@ -67,4 +67,14 @@
     <value>{{ hadoop.mapred_site.mapreduce.jobhistory.done_dir }}</value>
   </property>
 
+  <!-- not documented at https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/ClusterSetup.html -->
+  <property>
+    <name>mapreduce.jobhistory.webapp.https.address</name>
+    <value>{{ hadoop.mapred_site.mapreduce.jobhistory.webapp.https.address.host }}:{{ hadoop.mapred_site.mapreduce.jobhistory.webapp.https.address.port }}</value>
+  </property>
+  <property>
+    <name>mapreduce.jobhistory.admin.address</name>
+    <value>{{ hadoop.mapred_site.mapreduce.jobhistory.admin.address.host }}:{{ hadoop.mapred_site.mapreduce.jobhistory.admin.address.port }}</value>
+  </property>
+
 </configuration>

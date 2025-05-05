@@ -140,6 +140,8 @@
     <name>yarn.nodemanager.health-checker.interval-ms</name>
     <value>{{ hadoop.yarn_site.yarn.nodemanager.health_checker.interval_ms }}</value>
   </property>
+
+  <!-- not documented at https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/ClusterSetup.html -->
   <property>
     <name>yarn.web-proxy.address</name>
     <value>{{ hadoop.yarn_site.yarn.web_proxy.address.host }}:{{ hadoop.yarn_site.yarn.web_proxy.address.port }}</value>
