@@ -1,0 +1,29 @@
+# copy as '~/.bash_aliases_hadoop' add '. ~/.bash_aliases_hadoop' to '~/.bash_aliases'
+
+alias sudojps='sudo su - -c "jps"'
+
+alias format-hdnm='sudo su - -c "$HADOOP_HOME/bin/hdfs namenode -format" -s /usr/bin/bash hdfs'
+
+alias start-hdnm='sudo su - -c "$HADOOP_HOME/bin/hdfs --daemon start namenode" -s /usr/bin/bash hdfs'
+
+alias start-hddn='sudo su - -c "$HADOOP_HOME/bin/hdfs --daemon start datanode" -s /usr/bin/bash hdfs'
+
+alias start-hdrm='sudo su - -c "$HADOOP_HOME/bin/yarn --daemon start resourcemanager" -s /usr/bin/bash yarn'
+
+alias start-hdnd='sudo su - -c "$HADOOP_HOME/bin/yarn --daemon start nodemanager" -s /usr/bin/bash yarn'
+
+alias start-hdpx='sudo su - -c "$HADOOP_HOME/bin/yarn --daemon start proxyserver" -s /usr/bin/bash yarn'
+
+alias start-hdhs='sudo su - -c "$HADOOP_HOME/bin/mapred --daemon start historyserver" -s /usr/bin/bash mapred'
+
+alias stop-hdhs='sudo su - -c "$HADOOP_HOME/bin/mapred --daemon stop historyserver" -s /usr/bin/bash mapred'
+
+alias stop-hdpx='sudo su - -c "$HADOOP_HOME/bin/yarn --daemon stop proxyserver" -s /usr/bin/bash yarn'
+
+alias stop-hdnd='sudo su - -c "$HADOOP_HOME/bin/yarn --daemon stop nodemanager" -s /usr/bin/bash yarn'
+
+alias stop-hdrm='sudo su - -c "$HADOOP_HOME/bin/yarn --daemon stop resourcemanager" -s /usr/bin/bash yarn'
+
+alias stop-hddn='sudo su - -c "$HADOOP_HOME/bin/hdfs --daemon stop datanode" -s /usr/bin/bash hdfs'
+
+alias stop-hdnm='sudo su - -c "$HADOOP_HOME/bin/hdfs --daemon stop namenode" -s /usr/bin/bash hdfs'
